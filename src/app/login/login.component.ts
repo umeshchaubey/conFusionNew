@@ -1,5 +1,5 @@
- import { Component, OnInit } from '@angular/core';
- import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { Component, OnInit } from '@angular/core';
+import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-login',
@@ -8,15 +8,16 @@
 })
 export class LoginComponent implements OnInit {
 
-  user = {username: '' , password: '', remeber: false};
+  user = {username: '', password: '', remember: false};
 
   constructor(public dialogRef: MatDialogRef<LoginComponent>) { }
 
-  ngOnInit(): void {
+  ngOnInit() {
   }
 
-  onsubmit(){
-    console.log('User.', this.user);
+  onSubmit() {
+    console.log('User: ', this.user);
     this.dialogRef.close();
   }
+
 }
