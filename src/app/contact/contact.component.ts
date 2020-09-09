@@ -20,20 +20,57 @@ export class ContactComponent implements OnInit {
   }
               
   ngOnInit(): void {
-  }
+    
+    this.feedbackForm.valueChanges
+    .subscribe(data => this.onValueChanged(data));
+
+    this.onValueChanged(); // (re)set validation messages now 
+  
+}
 
   createForm(){
     this.feedbackForm = this.fb.group({
-      firstname: ['',Validators.required],
-      lastname: ['',Validators.required],
-      telnum: [0,Validators.required],
-      email: ['',Validators.required],
+      firstname: ['',[Validators.required, Validators.minLength(2), Validators.maxLength] ],
+      lastname: ['',[Validators.required, Validators.minLength(2), Validators.maxLength] ],
+      telnum: [0,[Validators.required, Validators.pattern] ],
+      email: ['',[Validators.required, Validators.email] ],
       agree: false,
       contacttype: 'None',
       message: ''
     });
 
   }
+
+  formErrors = {
+    'firstname': '',
+    'lastname': '',
+    'telnum': '',
+    'email': ''
+  };
+
+  validationMessages = {
+    'firstname': {
+    'required' : 'First name required.',
+    'minlength': 'First name must be atleast 2 characters long.',
+    'maxlength': 'First name not be more than 25 characters long.',
+    },
+
+    'lastname':{
+      'required' : 'Last name required.',
+      'minlength': 'Last name must be atleast 2 characters long.',
+      'maxlength': 'Last name not be more than 25 characters long.',
+    },
+
+    'telnum' : {
+      'required': 'Tel.number is required.',
+      'pattern' : 'Tel.number must be contain number.'
+    },
+
+    'email': {
+      'required': 'Email is required.',
+      'email':'Email is not in valid format.',
+    },
+  };
 
   onSubmit(){
     this.feedback= this.feedbackForm.value;
@@ -50,4 +87,23 @@ export class ContactComponent implements OnInit {
     this.feedbackFormDirective.resetForm();
   }
 
+  onValueChanged(data?: any) {
+    if (!this.feedbackForm) { return; }
+    const form = this.feedbackForm;
+    for (const field in this.formErrors) {
+      if (this.formErrors.hasOwnProperty(field)){
+        // clear previous error message (if any)
+        this.formErrors[field] = '';
+        const control = form.get(field);
+        if (control && control.dirty && !control.valid) {
+          const messages = this.validationMessages[field];
+          for (const key in control.errors) {
+            if (control.errors.hasOwnProperty(key)) {
+              this.formErrors[field] += messages[key] + ' ';
+            }
+          }
+        }
+      }
+    }
+  }
 }
