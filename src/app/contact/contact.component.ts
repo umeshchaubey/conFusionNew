@@ -63,7 +63,7 @@ export class ContactComponent implements OnInit {
 
     'telnum' : {
       'required': 'Tel.number is required.',
-      'pattern' : 'Tel.number must be contain number.'
+      'pattern' : 'Tel.num must be contain number.'
     },
 
     'email': {
