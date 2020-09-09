@@ -60,12 +60,12 @@
       <div fxFlex>
         <h3>Corporate Leadership</h3>
                    
-              <div fxFLex>
+              <div fxFLex *ngIf= "leaders">
              <ul>
                <li *ngFor="let leader of leaders">
                  <div fxLayoutAlign.gt-md="media-left">
                   <a>
-                    <img mat-card-image src={{leader.image}} alt="my image name">
+                    <img mat-list-avattar src={{leader.image}} alt={{leader.name}}>
                   </a>
                  </div>
               
@@ -78,35 +78,16 @@
                    </mat-card-content>
                   </mat-card-title>
                   </div>  
-               
-               </li>
+                </li>
              </ul>
               
-              </div>
-                   
-
-            </div>
+           
+        </div>
+        <div [hidden]="leader">
+          <mat-spinner></mat-spinner><h4>Loading . . . Please Wait</h4>
+      </div>
+      </div>
+      
     </div>
     
-  <!-- <div class="row row-content">
-    <div class="col-xs-12 col-sm-9">
-        <h2>Corporate Leadership</h2>
-       <ul class="media-list">
-        <li class="media" ng-repeat="leader of leaders">
-            <div class="media-left media-middle">
-                <a>
-                  <img mat-card-image src={{leader.image}} alt={{leader.name}}>
 
-
-                </a>
-            </div>
-            <div class="media-body">
-                <h3 class="media-heading">{{leader.name}}
-                <small>{{leader.designtion}}</small></h3>
-                <p>{{leader.description}}</p>
-            </div>
-        </li>
-    </ul>
-
-    </div>
-</div> -->
